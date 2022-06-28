@@ -76,6 +76,21 @@ async function FindCustomer({ email }) {
     }
 }
 
+async function FindCustomers() {
+
+
+    try {
+        const customerList = await CustomerModel.find({});
+        // console.log("user", existingCustomer);
+        return customerList;
+    } catch (err) {
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Customer');
+
+        // console.log(err);
+    }
+}
+
+
 
 // find Customer by id....
 async function FindCustomerById(id) {
@@ -242,4 +257,4 @@ async function AddOrderToProfile(customerId, order) {
 
 
 
-module.exports = { CreateCustomer, FindCustomer, FindCustomerById, CreateAddress, AddCartItem, AddOrderToProfile, AddWishlistItem, Wishlist };
+module.exports = { CreateCustomer, FindCustomer, FindCustomerById, FindCustomers, CreateAddress, AddCartItem, AddOrderToProfile, AddWishlistItem, Wishlist };

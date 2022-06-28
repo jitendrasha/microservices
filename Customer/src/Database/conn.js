@@ -1,8 +1,7 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/microservices', {
+const { DB_URL } = require('../../config');
+mongoose.connect(DB_URL, {
     useNewUrlParser: true,
-    //useFindAndModify: false,
-    //useUnifiedTopology: true
 });
 //Set up default mongoose connection
 var db = mongoose.connection;

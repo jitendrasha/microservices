@@ -22,16 +22,16 @@ const CustomerSchema = mongoose.Schema({
             price: { type: Number }
         }
     }],
-    Wishlist: [{
+    // Wishlist: [{
 
-        _id: { type: String, require: true },
-        name: { type: String },
-        description: { type: String },
-        banner: { type: String },
-        available: { type: Boolean },
-        price: { type: Number }
+    //     _id: { type: String, require: true },
+    //     name: { type: String },
+    //     description: { type: String },
+    //     banner: { type: String },
+    //     available: { type: Boolean },
+    //     price: { type: Number }
 
-    }],
+    // }],
     orders: [{
 
         _id: { type: String, require: true },

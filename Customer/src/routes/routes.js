@@ -12,5 +12,7 @@ route.post('/login', Customer.SignIn);
 route.post('/signup', Customer.SignUP);
 route.post('/address', auth, Customer.CreateAddress);
 route.get('/profile/:id', auth, Customer.GetProfile);
+route.get('/customers', Customer.FindCustomers);
+
 route.get('/shoping_details/:id', auth, Customer.GetShopingDetails);
 module.exports = route;

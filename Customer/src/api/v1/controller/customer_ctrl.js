@@ -6,44 +6,64 @@ const {
     FindCustomerById,
     AddOrderToProfile,
     AddCartItem,
+    FindCustomers
 
 } = require('../services/customer_services');
 
 var controllers = {
 
+    /**
+     * @swagger
+     * /admin/user/auth/signin:
+     *   post:
+     *     tags:
+     *       - Admin-Auth
+     *     description: Sign in admin user
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: user info
+     *         description: user info object
+     *         in: body
+     *         required: true
+     *         type: string
+     *         schema:
+     *            $ref: '#/definitions/loginUser'
+     *     responses:
+     *       200:
+     *          description: Returns success message
+     */
+
+
+
+
+
 
 
     SignIn: async function(req, res) {
-        // throw APIError.notFound('Data Not found');
 
         const { email, password } = req.body;
-        // console.log(email);
         try {
-
             const existingCustomer = await FindCustomer({ email });
-
             if (existingCustomer) {
-
                 const validPassword = await ValidatePassword(password, existingCustomer.password);
                 console.log(validPassword);
                 if (validPassword) {
-
-
                     const token = await GenerateSignature({ email: existingCustomer.email, _id: existingCustomer._id });
                     return res.send({
-
                         token: token,
                         message: "you have logged"
                     });
                 }
-
                 return res.send(" Wrong credentials")
             }
         } catch (err) {
-            // throw new APIError('Data Not found', err)
             console.log(err);
         }
     },
+
+
+
 
 
     SignUP: async function(req, res) {
@@ -66,14 +86,28 @@ var controllers = {
 
     },
 
+
+    FindCustomers: async function(req, res) {
+
+        const customers = await FindCustomers({})
+        res.send(customers);
+
+    },
+
+
+
+
+
+
+
     // create Address of the customer...
+
+
     CreateAddress: async function(req, res) {
 
         const _id = req.user._id;
-        //console.log(req.body);
-        const { street, postalCode, city, country } = req.body;
-        //console.log(street);
 
+        const { street, postalCode, city, country } = req.body;
         try {
             const addressResult = await CreateAddress({ _id, street, postalCode, city, country })
             return res.send(addressResult);
@@ -82,6 +116,10 @@ var controllers = {
             console.log(err);
         }
     },
+
+
+
+
 
     // Cet customer by id...
     GetProfile: async function(req, res) {
@@ -102,6 +140,8 @@ var controllers = {
             return error;
         }
     },
+
+
 
 
     GetShopingDetails: async function(req, res) {
@@ -126,8 +166,6 @@ var controllers = {
 
 
     async ManageCart(userid, product, qty, isRemove = false) {
-        // let { id, product, qty, isRemove } = req.body
-
         try {
             const cartResult = await AddCartItem(userid, product, qty, isRemove);
             return cartResult;
@@ -135,10 +173,11 @@ var controllers = {
             return error;
         }
     },
+
+
+
     ManageOrder: async function(req, res) {
         const _id = req.user._id;
-
-
         try {
             const orderResult = await AddOrderToProfile(_id, Order);
 
@@ -147,6 +186,8 @@ var controllers = {
             return error
         }
     },
+
+
     SubscribeEvents: async function(payload) {
 
         const { event, data } = payload;
@@ -162,10 +203,9 @@ var controllers = {
                 console.log("INSIDE SWITCH",
                     payload);
                 await AddCartItem(userid, product, qty, false);
-                // await this.ManageCart(userid, product, qty, false);
                 break;
             case 'REMOVE_FROM_CART':
-                this.ManageCart(userid, product, qty, true);
+                await AddCartItem(userid, product, qty, true);
                 break;
             case 'CREATE_ORDER':
                 await AddOrderToProfile(userid, order);
