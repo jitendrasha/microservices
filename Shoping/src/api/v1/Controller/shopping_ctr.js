@@ -1,6 +1,6 @@
 const Shop = require('../Services/services');
 //const { FormateData, GeneratePassword, GenerateSalt, GenerateSignature, ValidatePassword } = require('../../../helper/auth');
-const { PublishCustomerEvent } = require('../../../../helper/auth');
+const { PublishCustomerEvent } = require('../../../helper/auth');
 
 
 
@@ -33,9 +33,6 @@ var controller = {
         try {
             const orderResult = await Shop.CreateNewOrder(_id, txnNumber);
             console.log(orderResult);
-
-            // res.send(orderResult);
-
             const payload = {
                 event: 'CREATE_ORDER',
                 data: {
@@ -63,22 +60,6 @@ var controller = {
         }
     },
 
-
-    // ManageCart: async function(req, res) {
-    //     const _id = req.user._id;
-    //     // const { item, qty, isRemove } = req.body;
-
-
-    //     try {
-    //         const cartResult = await Shop.AddCartItem(_id, item, qty, isRemove);
-    //         return cartResult;
-    //     } catch (error) {
-    //         throw error;
-
-    //     }
-
-    // },
-
     async ManageCart(item, qty, isRemove = false) {
         // let { id, product, qty, isRemove } = req.body
 
@@ -91,14 +72,6 @@ var controller = {
             return error;
         }
     },
-
-
-
-
-
-
-
-
     GetOrderPayload(req, res) {
         const _id = req.user._id;
 
@@ -128,13 +101,10 @@ var controller = {
 
         switch (event) {
             case 'ADD_TO_CART':
-
-                // console.log("INSIDE SWITCH",
-                //     payload);
                 await Shop.AddCartItem(userid, product, qty, false);
 
                 // case 'REMOVE_FROM_CART':
-                //     this.ManageCart(userId, product, qty, true);
+                //     await Shop.AddCartItem(userid, product, qty, true);
 
                 //     // this.ManageCart(userId, product, qty, true);
                 //     break;

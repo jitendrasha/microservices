@@ -1,15 +1,9 @@
-const CartModel = require('../../../../database/models/Cart');
-const
-    OrderModel = require('../../../../database/models/Order');
+const CartModel = require('../../../database/models/Cart');
+const OrderModel = require('../../../database/models/Order');
 
 const { v4: uuidv4 } = require('uuid');
-// const { APIError, BadRequestError } = require('../../utils/app-errors')
 
-
-//Dealing with data base operations
-
-
-// payment
+// Orders
 
 async function Orders(customerId) {
     try {
