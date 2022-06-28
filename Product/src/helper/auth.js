@@ -5,10 +5,7 @@ const axios = require('axios');
 const APP_SECRET = process.env.APP_SECRET || "youarenowsecretkey";
 
 
-//Utility functions
-// module.exports.GenerateSalt = async() => {
-//         return await bcrypt.genSalt()
-//     },
+
 
 module.exports.GeneratePassword = async(password) => {
     return await bcrypt.hash(password, 10);
@@ -17,7 +14,6 @@ module.exports.GeneratePassword = async(password) => {
 
 module.exports.ValidatePassword = async(enteredPassword, savedPassword) => {
     return await bcrypt.compare(enteredPassword, savedPassword)
-        // return await this.GeneratePassword(enteredPassword) === savedPassword;
 };
 
 module.exports.GenerateSignature = async(payload) => {
@@ -39,13 +35,7 @@ module.exports.GenerateSignature = async(payload) => {
         return false
     };
 
-module.exports.FormateData = (data) => {
-    if (data) {
-        return { data }
-    } else {
-        throw new Error('Data Not found!')
-    }
-}
+
 
 module.exports.PublishCustomerEvent = async(payload) => {
     await axios.post('http://localhost:8001/app-events',

@@ -1,19 +1,19 @@
 const express = require('express');
 
 const app = express();
+const { port } = require('./config');
 
 app.use(express.json());
 
-const port = 8002
 
-// require('./src/middleware/app_events');
 require('./src/Database/connection');
 const route = require('./src/routes/routes');
-
-app.get('/get', (req, res) => {
-    res.send(" you are at  Product")
-})
 app.use('/api', route);
+
+
+
+
+
 
 app.use('/app-events', async(req, res, next) => {
     const { payload } = req.body;

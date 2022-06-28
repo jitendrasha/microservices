@@ -1,5 +1,4 @@
-// const { FindById } = require('../../../Database/models/products');
-const products = require('../../../Database/models/products');
+// const products = require('../../../Database/models/products');
 const { PublishCustomerEvent, PublishShoppingEvent } = require('../../../helper/auth');
 const {
     CreateProduct,
@@ -13,11 +12,6 @@ const {
 var controller = {
 
     CreateProducts: async function(req, res) {
-
-        // return res.send("helo");
-        // let { name, desc, type, unit, price, available, suplier, banner } = req.body
-        console.log("youare");
-
         try {
             const productResult = await CreateProduct(req.body);
             return res.send(productResult);
@@ -27,22 +21,16 @@ var controller = {
 
     },
 
-
     GetProducts: async function(req, res) {
         try {
             const products = await Products();
-
             let categories = {};
-
             products.map(({ type }) => {
                 categories[type] = type;
             });
-
             return res.send({
-
                 Product: products,
                 categories: Object.keys(categories),
-
             })
         } catch (error) {
             retrun("unwantd error", error);
@@ -52,7 +40,6 @@ var controller = {
 
     GetProductDescription: async function(req, res) {
         const id = req.user._id;
-        // console.log(id);
         try {
             // const id = id;
             const product = await FindById(id);
@@ -60,20 +47,13 @@ var controller = {
         } catch (error) {
             return;
         }
-
     },
 
 
     FindByCategory: async function(req, res) {
-        // res.send(" hendhfdskjf");
-
         const {
             category
         } = req.query;
-        // // res.send(category);
-
-        // return;
-
         try {
             const product = await FindByCategory(category);
             return res.send(product);
@@ -83,7 +63,6 @@ var controller = {
     },
 
     FindSelectedProducts: async function(req, res) {
-
         try {
             const { ids } = req.body;
             const products = await FindSelectedProducts(ids);
@@ -93,7 +72,6 @@ var controller = {
         }
 
     },
-
 
     addToCart: async function(req, res) {
         const { qty } = req.body
@@ -105,24 +83,12 @@ var controller = {
                 data: { userid: req.user._id, product: product, qty: qty }
             }
             await PublishShoppingEvent(payload);
-
             await PublishCustomerEvent(payload);
-
-
-
-
-
             return res.send(payload);
         } else {
             return " No product available";
         }
     },
 
-
-
-
-
 }
-
-
 module.exports = controller;

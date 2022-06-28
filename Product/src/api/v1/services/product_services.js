@@ -3,7 +3,6 @@ const { ProductModel } = require('../../../Database/models')
 
 async function CreateProduct({ name, desc, type, unit, price, available, suplier, banner }) {
 
-    console.log("hello sir");
     try {
         const Product = new ProductModel({
             name,
@@ -21,9 +20,6 @@ async function CreateProduct({ name, desc, type, unit, price, available, suplier
         return error;
     }
 }
-
-
-
 
 //  list all the type of pruducts....
 async function Products() {

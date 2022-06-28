@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/Product_services', {
+
+const { DB_URI } = require('../../config');
+// console.log(DB_URI);
+mongoose.connect(DB_URI, {
     useNewUrlParser: true,
-    //useFindAndModify: false,
-    //useUnifiedTopology: true
+
 });
 //Set up default mongoose connection
 var db = mongoose.connection;
